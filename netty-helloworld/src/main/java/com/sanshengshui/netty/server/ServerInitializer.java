@@ -19,13 +19,13 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     public void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
 
-        // Add the text line codec combination first,
+        // 添加 文本行编解码
         pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-        // the encoder and decoder are static as these are sharable
+        // DECODER : IO 的 入站解码器
         pipeline.addLast(DECODER);
+        // DECODER : IO 的 出站编码器
         pipeline.addLast(ENCODER);
-
-        // and then business logic.
+        // 添加自己的 ServerHandler
         pipeline.addLast(SERVER_HANDLER);
     }
 }
